@@ -4,7 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "generate-sub-items": "node scripts/generate-sub-items.js"
+    "start": "node src/index.js",
+    "generate-items": "node ./src/generate-items.js"
   },
   "keywords": [],
   "author": "",
