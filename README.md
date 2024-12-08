@@ -4,7 +4,7 @@ npm i
 ```
 2. 
 ```
-npm run generatesub-items
+npm run generate-sub-items
 ```
 3. 
 ```
