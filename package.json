@@ -1,0 +1,16 @@
+{
+  "name": "mp2-cmsc142",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "generate-sub-items": "node scripts/generate-sub-items.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "csv-writer": "^1.6.0"
+  }
+}
