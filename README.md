@@ -4,9 +4,9 @@ npm i
 ```
 2. 
 ```
-npm run generate-sub-items
+npm run generate-items
 ```
 3. 
 ```
-node .
+npm run start
 ```
