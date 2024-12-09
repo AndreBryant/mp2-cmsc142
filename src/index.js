@@ -5,38 +5,6 @@ import { createObjectCsvWriter } from "csv-writer";
 const maxCapacity = 1000;
 const nStart = 100;
 const nEnd = 5000;
-const result = [];
-
-let perThousandTotalTime = 0;
-for (let n = nStart; n < nEnd; n++) {
-  const iterationData = [];
-  let iterationTotalTime = 0;
-
-  for (let i = 1; i <= 3; i++) {
-    const startTime = Date.now();
-    const { value } = bottomUp(maxCapacity, items.slice(0, n));
-    const endTime = Date.now();
-    const executionTime = endTime - startTime;
-    iterationData.push({ [`value${i}`]: value, [`time${i}`]: executionTime });
-    iterationTotalTime += executionTime;
-  }
-
-  perThousandTotalTime += iterationTotalTime;
-  result.push({
-    n,
-    ...iterationData[0],
-    ...iterationData[1],
-    ...iterationData[2],
-    averageTime: (iterationTotalTime / 3).toFixed(6),
-  });
-
-  if (n % 1000 === 0) {
-    const t = (perThousandTotalTime / 1000).toFixed(6);
-    console.log(`Iteration: ${n}, Time: ${t} seconds`);
-    perThousandTotalTime = 0;
-  }
-}
-
 // for csv
 const csvWriter = createObjectCsvWriter({
   path: "results/results.csv",
@@ -52,7 +20,31 @@ const csvWriter = createObjectCsvWriter({
   ],
 });
 
-csvWriter
-  .writeRecords(result)
-  .then(() => console.log("The CSV file was written successfully"))
-  .catch((err) => console.error(err));
+console.log("Started: ", new Date());
+for (let n = nStart; n < nEnd; n++) {
+  const iterationData = [];
+  let iterationTotalTime = 0;
+
+  for (let i = 1; i <= 3; i++) {
+    const startTime = Date.now();
+    const { value } = bottomUp(maxCapacity, items.slice(0, n));
+    const endTime = Date.now();
+    const executionTime = endTime - startTime;
+    iterationData.push({ [`value${i}`]: value, [`time${i}`]: executionTime });
+    iterationTotalTime += executionTime;
+  }
+
+  const record = {
+    n,
+    ...iterationData[0],
+    ...iterationData[1],
+    ...iterationData[2],
+    averageTime: (iterationTotalTime / 3).toFixed(6),
+  };
+
+  await csvWriter.writeRecords([record]);
+
+  if (n % 1000 === 0) {
+    console.log(`Iteration: ${n}`);
+  }
+}
